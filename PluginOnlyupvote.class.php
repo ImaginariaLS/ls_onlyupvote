@@ -15,21 +15,27 @@
  * Запрещаем напрямую через браузер обращение к этому файлу.
  */
 if (!class_exists('Plugin')) {
-	die('Hacking attempt!');
+    die('Hacking attempt!');
 }
 
-class PluginOnlyupvote extends Plugin {
+class PluginOnlyupvote extends Plugin
+{
 
     protected $aInherits = array(
-       'action' => array('ActionAjax'),
+        'action' => array('ActionAjax'),
     );
 
-	
-	/**
-	 * Активация плагина	 
-	 */
-	public function Activate() {
-		return true;
-	}
+
+    /**
+     * Активация плагина
+     */
+    public function Activate()
+    {
+        return true;
+    }
+
+    public function Init()
+    {
+        $this->Viewer_AppendStyle(Plugin::GetTemplatePath(__CLASS__) . "css/style.css"); // Добавление своего CSS
+    }
 }
-?>
