@@ -28,7 +28,18 @@ class PluginOnlyupvote_ActionAjax extends PluginOnlyupvote_Inherit_ActionAjax
 
         $iValue = getRequest('value', null, 'post');
 
-        if ($iValue == -1 and (!$this->oUserCurrent->isAdministrator() or ($this->oUserCurrent->isAdministrator() and !Config::Get('plugin.onlyupvote.admin_allow_downvote')))) {
+        if (
+            $iValue == -1 
+            and (
+                !$this->oUserCurrent->isAdministrator() 
+                or (
+                    $this->oUserCurrent->isAdministrator() 
+                    and 
+                    !Config::Get('plugin.onlyupvote.admin_allow_downvote')
+                )
+                or !Config::Get('plugin.onlyupvote.comment_allow_downvote')
+            )
+        ) {
             $this->Message_AddErrorSingle($this->Lang_Get('plugin.onlyupvote.comment_vote_error_value_down'), $this->Lang_Get('attention'));
             return Router::Action('error');
         } else {
